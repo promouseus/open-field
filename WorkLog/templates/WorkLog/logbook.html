@@ -1,0 +1,19 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{{ LANGUAGE_CODE }}
+
+
+<form role="form" action="" method="post" xmlns="http://www.w3.org/1999/html">
+{% for field in form %}
+    <div class="fieldWrapper">
+        {% csrf_token %} {# token to protection against Cross Site Request Forgeries #}
+        <strong>{{ field.errors }}</strong>
+        {{ field.label_tag }} {{ field }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+        <hr/>
+    </div>
+{% endfor %}
+<button type="submit">Submit</button>
+</form>
