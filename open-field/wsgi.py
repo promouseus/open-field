@@ -1,5 +1,5 @@
 """
-WSGI config for untitled29_7 project.
+WSGI config for open-field project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

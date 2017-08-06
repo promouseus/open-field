@@ -1,4 +1,4 @@
-"""untitled29_7 URL Configuration
+"""open-field URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -15,14 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from WorkLog import views
-from django.contrib.auth import views as auth_views
+from WorkLog import views as WorkLog_views
+from InfrastructureProvider import views as InfrastructureProvider_views
+#from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
-    url(r'^logbook', views.logbook, name='logbook'),
+    url(r'^logbook', WorkLog_views.logbook, name='logbook'),
+    url(r'^leaseweb', InfrastructureProvider_views.index, name='logbook'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^language/', views.language, name='language'),  #example form for language select
+    url(r'^language/', WorkLog_views.language, name='language'),  #example form for language select
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='index'),
+    url(r'^$', WorkLog_views.index, name='index'),
 ]

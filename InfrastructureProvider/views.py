@@ -1,8 +1,33 @@
-__author__ = 'Promouseus'
-
-import httplib
+from django.shortcuts import render
+from django.conf import settings  # import secret for LeaseWeb API
+import urllib.request
 import json
-from conf import LeasewebApiKey
+
+# Create your views here.
+def index(request):
+
+    req = urllib.request.Request('https://api.leaseweb.com/v1/bareMetals')
+    req.add_header('X-Lsw-Auth', settings.SECRET_LEASEWEB)
+    #r = urllib.request.urlopen(req)
+
+    r = ""
+    with urllib.request.urlopen(req) as f:
+        r += f.read().decode('utf-8')
+    r = json.loads(r)
+
+    context = {
+        'leaseweb_string': r['bareMetals'],
+    }
+    return render(request, 'InfrastructureProvider/index.html', context)
+
+
+
+'''
+OLD Python2 code, rewrite to above Python3 code from httplib to urllib also
+
+#import httplib
+#import json
+#from conf import LeasewebApiKey
 
 # Request: LeaseWeb API (https://api.leaseweb.com/v1/bareMetals)
 connection = httplib.HTTPSConnection('api.leaseweb.com')
@@ -149,3 +174,4 @@ except httplib.HTTPException, e:
 print detailsUpdate
 
 connection.close()
+'''

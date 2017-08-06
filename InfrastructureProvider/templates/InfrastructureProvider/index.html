@@ -1,0 +1,7 @@
+Welkom to the webpage for the LeaseWeb API
+
+{{ leaseweb_string }}
+
+{% for element in leaseweb_string %}
+<p>{{ element.bareMetal.serverName }} ({{ element.bareMetal.bareMetalId }}) {{ element.bareMetal.reference }}</p>
+{% endfor %}

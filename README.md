@@ -9,10 +9,10 @@ To control and harvest the power of these new hybrid IT infrastructure Promouseu
 The Promouseus open-field project aims to become the foundation to control your IT landscape with an out-of-the-box user and programming interface.
 
 ##User interface
-The web-based user interface is focuses on end-users in small business.
+The web-based user interface is focuses on end-users in small businesses.
 
 ##Programming interface
-The programming interface is create to allow company’s with a deeper understanding of IT to connect the user interface to there own infrastructure services. For example: ISP’s are using Promouseus open-field to allow there users (customers) to manage there internet connections and firewall settings.
+The programming interface is created to allow company’s with a deeper understanding of IT to connect the user interface to there own infrastructure services. For example: ISP’s are using Promouseus open-field to allow there users (customers) to manage there internet connections and firewall settings.
 
 ##Project status
 Currently we are rebuilding all infrastructure tools, concepts and idea’s that we created in the last 20 years to the open-field project. All current code is draft. At the end of 2017 we expect to launch the first out-of-the-box version with an installer included.
