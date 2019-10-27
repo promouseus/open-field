@@ -29,9 +29,12 @@ services:
       - "127.0.0.1:8081:8081"
 
   mongo-charts:
-    image: quay.io/mongodb/charts:v0.10.0
+    #image: quay.io/mongodb/charts:v0.10.0
+    # https://docs.mongodb.com/charts/onprem/installation/
+    # Check if everything is still needed/compatible with version 19.09
+    image: quay.io/mongodb/charts:19.09
     environment:
-    - CHARTS_MONGODB_URI=mongodb://monitoringflow_mongo_1
+    - CHARTS_MONGODB_URI=mongodb://microservice_mongo_1
     # The presence of following 2 environment variables will enable HTTPS on Charts server.
       # All HTTP requests will be redirected to HTTPS as well.
       # To enable HTTPS, upload your certificate and key file to the web-certs volume,
