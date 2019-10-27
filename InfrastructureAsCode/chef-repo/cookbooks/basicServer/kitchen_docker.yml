@@ -1,0 +1,75 @@
+---
+driver:
+  name: dokken
+  pull_platform_image: false
+  pull_chef_image: false
+  #chef_image: docker.local.corp/chef/chef
+  #data_image: docker.local.corp/dokken/kitchen-cache:latest
+  chef_version: 14.10.9 # or 15 or 15.0 or 15.0.300 or curent
+  privileged: true
+
+provisioner:
+  name: dokken
+  # You may wish to disable always updating cookbooks in CI or other testing environments.
+  # For example:
+  #   always_update_cookbooks: <%= !ENV['CI'] %>
+  always_update_cookbooks: true
+  deprecations_as_errors: true
+
+transport:
+  name: dokken
+
+verifier:
+  name: inspec
+
+platforms:
+# Redhat
+- name: centos-7
+  driver:
+    image: dokken/centos-7
+    pid_one_command: /usr/lib/systemd/systemd
+    hostname: centos7.domain
+
+# Ubuntu
+- name: ubuntu-16.04
+  driver:
+    image: dokken/ubuntu-16.04
+    pid_one_command: /bin/systemd
+    hostname: ubuntu16.domain
+- name: ubuntu-18.04
+  driver:
+    image: dokken/ubuntu-18.04
+    pid_one_command: /bin/systemd
+    hostname: ubuntu18.domain
+
+# Debian
+- name: debian-7
+  driver:
+    image: dokken/debian-7
+    pid_one_command: /sbin/init
+    ports: 
+      - '161:161/udp'
+    hostname: debian7.domain
+- name: debian-9
+  driver:
+    image: dokken/debian-9
+    pid_one_command: /bin/systemd
+    ports: 
+      - '162:161/udp'
+    hostname: debian9.domain
+- name: debian-10
+  driver:
+    image: dokken/debian-10
+    pid_one_command: /bin/systemd
+    hostname: debian10.domain
+
+suites:
+  - name: default
+    run_list:
+      - recipe[basicServer::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
+  
+---
