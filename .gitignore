@@ -1,11 +1,1 @@
-# Remove PyCharm project directory
-.idea
-
-# Remove SQL database
-db.sqlite3
-
-# Remove settings from project temporarly (until SECRET_KEY has a safe place to be ;-)
-open-field/settings.py
-
-# Byte-compiled / optimized / DLL files
-__pycache__/
+# Nothing to ignore, yet...
