@@ -1,0 +1,95 @@
+version: '3.2'
+services:
+
+  nifi:
+    image: "apache/nifi:latest"
+    restart: always
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - type: volume
+        source: nifi-conf
+        target: /opt/nifi/nifi-current/conf
+        volume:
+          nocopy: false
+      - type: bind
+        source: ./
+        target: /home/nifi/data
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "127.0.0.1:27017:27017"
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "127.0.0.1:8081:8081"
+
+  mongo-charts:
+    image: quay.io/mongodb/charts:v0.10.0
+    environment:
+    - CHARTS_MONGODB_URI=mongodb://monitoringflow_mongo_1
+    # The presence of following 2 environment variables will enable HTTPS on Charts server.
+      # All HTTP requests will be redirected to HTTPS as well.
+      # To enable HTTPS, upload your certificate and key file to the web-certs volume,
+      # uncomment the following lines and replace with the names of your certificate and key file.
+      # CHARTS_HTTPS_CERTIFICATE_FILE: charts-https.crt
+      # CHARTS_HTTPS_CERTIFICATE_KEY_FILE: charts-https.key
+
+      # This environment variable controls the built-in support widget and
+      # metrics collection in MongoDB Charts. To disable both, set the value
+      # to "off". The default is "on".
+    - CHARTS_SUPPORT_WIDGET_AND_METRICS=off
+      # Directory where you can upload SSL certificates (.pem format) which
+      # should be considered trusted self-signed or root certificates when
+      # Charts is accessing MongoDB servers with ?ssl=true
+    - SSL_CERT_DIR=/mongodb-charts/volumes/db-certs
+    restart: always
+    volumes:
+      - mongo-charts-keys:/mongodb-charts/volumes/keys
+      - mongo-charts-logs:/mongodb-charts/volumes/logs
+      - mongo-charts-db-certs:/mongodb-charts/volumes/db-certs
+      - mongo-charts-web-certs:/mongodb-charts/volumes/web-certs
+    # Create first user: charts-cli add-user --first-name "first" --last-name "last" --email "mail@mail.mail" --password "password" --role "UserAdmin"
+    ports:
+      - "127.0.0.1:8082:80"
+
+  grafana:
+    image: grafana/grafana
+    restart: always
+    environment:
+      - GF_SERVER_ROOT_URL=http://127.0.0.1"
+      - GF_SECURITY_ADMIN_PASSWORD=password
+      - GF_INSTALL_PLUGINS=grafana-simple-json-datasource
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  grafana-datasource:
+    build: grafana-datasource
+    restart: always
+    ports:
+      - "127.0.0.1:8083:3333"
+
+  manager:
+    image: alpine
+    restart: always
+    entrypoint: top
+    volumes:
+      - type: volume
+        source: nifi-conf
+        target: /opt/nifi-conf
+        volume:
+          mode: 0440
+
+volumes:
+  nifi-conf:
+  mongo-charts-keys:
+  mongo-charts-logs:
+  mongo-charts-db-certs:
+  mongo-charts-web-certs:
+  grafana-storage:
