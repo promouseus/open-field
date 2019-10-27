@@ -1,0 +1,23 @@
+[
+    {
+        "data_namespace": {
+            "date": new Date(1485252600000),
+            "data_source": {
+                "rack": "A22",
+                "server": "X1",
+                "vm": 6
+            },
+            "sample": {
+                "counterA": 459,
+                "counterB": 569,
+                "counterC": 679
+            },
+            "relation": {
+                "A_relates_to": "B"
+            },
+            "event": {
+                "errorX": "Oh no, it's dead ;-) again......"
+            }
+        } 
+    }
+]
