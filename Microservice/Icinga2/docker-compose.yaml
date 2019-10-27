@@ -1,0 +1,61 @@
+version: '3.3'
+services:
+  db:
+    # build: db
+    image: icinga2docker_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pwd
+      MYSQL_DATABASE: icinga
+      MYSQL_USER: icinga
+      MYSQL_PASSWORD: icingapwd
+    volumes:
+      - icinga2-schema:/docker-entrypoint-initdb.d/
+    depends_on:
+          - master
+  db-web:
+    # build: db-web
+    image: icinga2docker_db-web
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pwd
+      MYSQL_DATABASE: icingaweb
+      MYSQL_USER: icingaweb
+      MYSQL_PASSWORD: icingawebpwd
+#  db-dir:
+#    build: db-dir
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: pwd
+#      MYSQL_DATABASE: icingadir
+#      MYSQL_USER: icingadir
+#      MYSQL_PASSWORD: icingadirpwd
+  master:
+    # build: master
+    image: icinga2docker_master
+    restart: always
+    ports:
+        - "5665:5665"
+    volumes:
+        - icinga2-schema:/usr/share/icinga2-ido-mysql/schema
+        - ./master/conf.d/:/etc/icinga2/conf.d/
+  web:
+      # build: web
+      image: icinga2docker_web
+      restart: always
+      volumes:
+        - icingaweb2-app:/usr/share/webapps/icingaweb2
+        - icingaweb2-etc:/etc/icingaweb2
+      ports:
+        - "8888:80"
+  php:
+        # build: php
+        image: icinga2docker_php
+        restart: always
+        volumes:
+                - icingaweb2-app:/usr/share/webapps/icingaweb2
+                - icingaweb2-etc:/etc/icingaweb2
+volumes:
+  icingaweb2-app:
+  icingaweb2-etc:
+  icinga2-schema:
