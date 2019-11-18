@@ -22,14 +22,6 @@ services:
       MYSQL_DATABASE: icingaweb
       MYSQL_USER: icingaweb
       MYSQL_PASSWORD: icingawebpwd
-#  db-dir:
-#    build: db-dir
-#    restart: always
-#    environment:
-#      MYSQL_ROOT_PASSWORD: pwd
-#      MYSQL_DATABASE: icingadir
-#      MYSQL_USER: icingadir
-#      MYSQL_PASSWORD: icingadirpwd
   master:
     # build: master
     image: icinga2docker_master
