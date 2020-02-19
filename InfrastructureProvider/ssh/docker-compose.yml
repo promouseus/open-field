@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  libssh_builder:
+    build: libssh_builder
+    #image: icinga2docker_master
+    restart: always
+    #ports:
+    #    - "5665:5665"
+    #volumes:
+    #    - icinga2-schema:/usr/share/icinga2-ido-mysql/schema
+    #    - ./master/conf.d/:/etc/icinga2/conf.d/
