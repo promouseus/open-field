@@ -13,7 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var appController: TVApplicationController?
     
-    static let TVBootURL = "http://localhost:9001/js/application.js"
+    // Connect to Promouseus back-end and send ID for vendor
+    static let TVBootURL = "http://localhost:9001/js/application.js?" + UIDevice.current.identifierForVendor!.uuidString
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
