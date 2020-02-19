@@ -12,7 +12,7 @@ services:
       - "--character-set-server=utf8"
       - "--collation-server=utf8_unicode_ci"
     volumes:
-      - "./db:/var/lib/mysql"
+      - "librenms-db:/var/lib/mysql"
     environment:
       - "TZ=${TZ}"
       - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
@@ -31,7 +31,7 @@ services:
     depends_on:
       - db
     volumes:
-      - "./librenms:/data"
+      - "librenms-data:/data"
     environment:
       - "TZ=${TZ}"
       - "PUID=${PUID}"
@@ -44,3 +44,7 @@ services:
     env_file:
       - "./librenms.env"
     restart: always
+
+volumes:
+  librenms-data:
+  librenms-db:
