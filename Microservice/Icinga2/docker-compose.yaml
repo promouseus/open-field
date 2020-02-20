@@ -55,7 +55,7 @@ services:
     build: perf
     #image: icinga2docker_perf
     restart: always
-    ports:
+    #ports:
       #- "8889:80"
     environment:
       MEMCACHE_HOST: 127.0.0.1:11211
