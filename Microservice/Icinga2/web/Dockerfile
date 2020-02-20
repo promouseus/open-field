@@ -17,13 +17,20 @@ RUN echo "LoadModule rewrite_module modules/mod_rewrite.so" > /usr/local/apache2
     && echo "</FilesMatch>" >> /usr/local/apache2/conf/icingaweb2.conf \
     && echo "DirectoryIndex index.php" >> /usr/local/apache2/conf/icingaweb2.conf \
     && icingacli setup config webserver apache >> /usr/local/apache2/conf/icingaweb2.conf \
-    && echo "Include conf/icingaweb2.conf" >> /usr/local/apache2/conf/httpd.conf
+    && echo "Include conf/icingaweb2.conf" >> /usr/local/apache2/conf/httpd.conf \
+    # Forward root page to icingaweb2 subfolder
+    && echo '<html><head><meta http-equiv="refresh" content="0; url=./icingaweb2" /></head><body>Forwarding to <a href="icingaweb2/">Icinga2web</a></body></html>' > /usr/local/apache2/htdocs/index.html
 
 # Configure Icingaweb2
 # TODO: create entrypoint script with ENV's for this? Currently comming from directory
 
 RUN /bin/mkdir /etc/icingaweb2/enabledModules \
     && /bin/ln -s /usr/share/webapps/icingaweb2/modules/monitoring /etc/icingaweb2/enabledModules/monitoring
+# Install perf module
+RUN /usr/bin/install -d -m 0755 /usr/share/webapps/icingaweb2/modules/graphite \
+    && /usr/bin/wget -q -O - https://github.com/icinga/icingaweb2-module-graphite/archive/v1.1.0.tar.gz | tar xfz - -C /usr/share/webapps/icingaweb2/modules/graphite --strip-components 1 \
+    && /bin/ln -s /usr/share/webapps/icingaweb2/modules/graphite /etc/icingaweb2/enabledModules/graphite
+
 ADD setup /etc/icingaweb2
 RUN chown www-data:www-data /etc/icingaweb2/ -R
 # TODO: remoce secret file in etc/icingaweb2 as it's not needed due to automated install

@@ -1,7 +1,7 @@
 #PHP
 # TODO: switch to newest PHP 7.2 when Icinga sesions are fixed: https://github.com/Icinga/icingaweb2/pull/3186
 # FROM php:7.1-fpm-alpine
-FROM php:7.2-fpm-alpine
+FROM php:7.3-fpm-alpine
 
 # Install PHP intl and gettext
 RUN apk add --no-cache icu-dev gettext-dev curl-dev \

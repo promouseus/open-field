@@ -22,6 +22,14 @@ RUN /usr/sbin/icinga2 feature enable ido-mysql \
     && echo -e "\tdatabase = \"icinga\"" >> /etc/icinga2/features-available/ido-mysql.conf \
     && echo "}" >> /etc/icinga2/features-available/ido-mysql.conf
 
+# Enable perf (TODO: ENV needed)
+RUN /usr/sbin/icinga2 feature enable graphite \
+    && echo 'object GraphiteWriter "graphite" {' > /etc/icinga2/features-available/graphite.conf \
+    && echo -e "\thost = \"perf\"" >> /etc/icinga2/features-available/graphite.conf \
+    && echo -e "\tport = 2003" >> /etc/icinga2/features-available/graphite.conf \
+    && echo -e "\tenable_send_thresholds = true" >> /etc/icinga2/features-available/graphite.conf \
+    && echo "}" >> /etc/icinga2/features-available/graphite.conf
+
 # vi /etc/icinga2/conf.d/hosts.conf
 #icinga2 daemon -C
 #icinga2 object list --type Host
@@ -38,7 +46,14 @@ RUN /usr/sbin/icinga2 feature enable ido-mysql \
 #RUN apk add monitoring-plugins
 #CMD ["icinga2", "feature", "list"]
 ## critical, warning, information, notice and debug
-ENTRYPOINT /usr/sbin/icinga2 daemon -x notice
+#ENTRYPOINT /usr/sbin/icinga2 -x warning
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# Backwards compatible link
+RUN ln -s /usr/local/bin/docker-entrypoint.sh /
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+#ENTRYPOINT /usr/sbin/icinga2 daemon -x warning
+# CMD ["/usr/sbin/icinga2", "daemon", "-x", "warning"]
 
 #Disabled features: api command compatlog debuglog elasticsearch gelf graphite ido-mysql ido-pgsql influxdb livestatus opentsdb perfdata statusdata syslog
 #Enabled features: checker mainlog notification
