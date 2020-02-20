@@ -240,7 +240,7 @@ RUN printf "#!/bin/bash\n\
             sed -i 's/'PASSWORD''/''\$LIBRENMS_db_pass'/' /opt/librenms/config.php\n\
             cd /opt/librenms\n\
             /usr/bin/php build-base.php\n\
-            /usr/bin/php adduser.php jeffrey2 lminow 10 jeffrey@fusix.nl\n\
+            /usr/bin/php adduser.php jeffrey2 topsecret 10 jeffrey@dom.nl\n\
     fi\n" > /root/LibreNMS.sh\
     && chmod +x /root/LibreNMS.sh
 
