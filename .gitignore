@@ -3,3 +3,6 @@
 
 # Don't add local xcode cache files
 **/xcuserdata
+
+# Exclude RAW prman output from git
+**/*.tiff

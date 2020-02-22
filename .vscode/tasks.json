@@ -1,0 +1,29 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "options": {
+        "env": {
+          "RMANTREE": "/Applications/Pixar/RenderManProServer-23.1"
+        },
+        "cwd": "${workspaceFolder}/${relativeFileDirname}"
+     },
+    "tasks": [
+        {
+            "label": "Render image from scene",
+            "type": "shell",
+            "command": "/Applications/Pixar/RenderManProServer-23.1/bin/prman",
+            "args": [
+                "-progress", "${file}"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true,
+                "echo": false
+            },
+            "problemMatcher": []
+        }
+    ]
+}

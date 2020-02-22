@@ -1,0 +1,66 @@
+#min.rib
+Display "min.tiff" "file" "rgba"
+
+# Hide object for camera closer then A and further then B from camera
+##Clipping 1 10
+
+Format 1024 768 1.0
+
+#Gamma correction for output. Better to do after rendering because a corrected image (non liniary values) can’t be corrected a second time.
+##Exposure 1.0 2.2
+
+#Hoeveel blokjes samples om hoeken te voorkomen (is dit niet gewoon antialising?)
+##PixelSamples 4 4
+
+#Default gov is 90, can remove fov and [] then
+Projection "perspective" "fov" [ 90 ]
+
+WorldBegin
+
+#Rotate -34 0 1 0
+
+#TransformBegin
+	Translate 0 0 2
+
+	#Translate -2 0 0
+	#Sphere 1 -1 1 360
+
+	#Translate 4 0 0
+	##Scale 2 1 1
+	
+	#Sphere 1 -1 1 360
+	##Sphere 2 -1 1 360
+
+#TransformEnd
+
+TransformBegin
+	Translate 4 0 8
+
+	#Cone 6 0.5 360
+	##Cylinder 2 -3 3 360
+
+	#Torus 1 2 1 50 360
+	##Disk 3 2 360
+TransformEnd
+
+Translate 0 0 2
+Color [1 0 0]
+
+AttributeBegin
+	Translate 0.25 0 -1
+	#Matte 1 #doe als of object er wel is maar laat niet zien (voor foto later invoegen bijvoorbeeld)
+	Color [ 0 1 0 ]
+	Opacity [ 0.8 0.8 0.8 ]
+	ShadingRate 100 #hoger is minder punten dus abrupter kleur verloop, default 1: kan niet goed zien of dit werkt
+	Sphere 2 -2 2 360
+AttributeEnd
+
+AttributeBegin
+	##Sides 1 #Alleen 1 zichtbare kant renderen
+	###Orientation inside/outside #Zichtbare kant hart vastleggen
+	###ReverseOrientation #Omdraaien te renderen kant
+	Translate -3 0 0
+	Paraboloid 8 1 16 360
+AttributeEnd
+
+WorldEnd
