@@ -1,6 +1,7 @@
 {
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
+
     "version": "2.0.0",
     "options": {
         "env": {
@@ -10,7 +11,7 @@
      },
     "tasks": [
         {
-            "label": "Render image from scene",
+            "label": "Render RIB file",
             "type": "shell",
             "command": "/Applications/Pixar/RenderManProServer-23.1/bin/prman",
             "args": [
@@ -23,7 +24,18 @@
                 "clear": true,
                 "echo": false
             },
-            "problemMatcher": []
+            "problemMatcher": [],
+            
         }
     ]
 }
+
+// For comfort you can add the text below in keybindings.json (VSCODE) to make command+r render a rib file:
+    /*
+        {
+            "key": "cmd+r",
+            "command": "workbench.action.tasks.runTask",
+            "args": "Render RIB file",
+            "when": "resourceExtname == .rib"
+        }
+    */
