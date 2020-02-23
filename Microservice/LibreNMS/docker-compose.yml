@@ -45,6 +45,29 @@ services:
       - "./librenms.env"
     restart: always
 
+  cron:
+    image: librenms/librenms:latest
+    container_name: librenms_cron
+    domainname: example.com
+    hostname: librenms
+    depends_on:
+      - librenms
+    volumes:
+      - "librenms-data:/data"
+    environment:
+      - "TZ=${TZ}"
+      - "PUID=${PUID}"
+      - "PGID=${PGID}"
+      - "DB_HOST=db"
+      - "DB_NAME=${MYSQL_DATABASE}"
+      - "DB_USER=${MYSQL_USER}"
+      - "DB_PASSWORD=${MYSQL_PASSWORD}"
+      - "DB_TIMEOUT=60"
+      - "SIDECAR_CRON=1"
+    env_file:
+      - "./librenms.env"
+    restart: always
+
 volumes:
   librenms-data:
   librenms-db:
