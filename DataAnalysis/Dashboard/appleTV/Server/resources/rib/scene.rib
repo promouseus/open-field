@@ -1,0 +1,124 @@
+Display "propeller.tiff" "framebuffer" "rgba"
+Format 1024 1024 1
+
+PixelVariance 0
+Hider "raytrace" "int incremental" 1 "int maxsamples" 128
+
+Integrator "PxrPathTracer" "handle"
+Attribute "trace" "int maxdiffusedepth" 3 "int maxspeculardepth" 5
+
+Attribute "visibility"
+          "int indirect" 1
+          "int transmission" 1
+          "int camera" 1
+
+IfBegin "1"
+  # Rolling shutter
+  Shutter 0 1
+  Projection "PxrCamera" "float fov" 30 "float duration" 0.03125
+Else
+  # Standard shutter
+  Shutter 0 0.03125
+  Projection "PxrPerspective" "float fov" 30
+IfEnd
+
+Translate 0 0 5
+
+WorldBegin
+
+  AttributeBegin
+    Translate 0 0.99 0
+    Rotate 90 1 0 0
+    Scale 0.5 0.5 0.5
+    Light "PxrRectLight" "light0" "intensity" 35
+  AttributeEnd
+
+  # Matte box
+  AttributeBegin
+    # left wall
+    Bxdf "PxrDiffuse" "left" "color diffuseColor" [1 0.625 0.625]
+    Patch "bilinear" "P" [ -1 1 -1  -1 1 1  -1 -1 -1  -1 -1 1]
+    # right wall
+    Bxdf "PxrDiffuse" "right" "color diffuseColor" [0.625 0.625 1]
+    Patch "bilinear" "P" [ 1 1 1  1 1 -1  1 -1 1  1 -1 -1 ]
+    # floor
+    Bxdf "PxrDiffuse" "floor" "color diffuseColor" [0.75 0.75 0.75]
+    Patch "bilinear" "P" [ -1 -1 1  1 -1 1  -1 -1 -1  1 -1 -1 ]
+    # ceiling
+    Bxdf "PxrDiffuse" "ceiling" "color diffuseColor" [0.75 0.75 0.75]
+    Patch "bilinear" "P" [ -1 1 -1  1 1 -1  -1 1 1  1 1 1 ]
+    # back wall
+    Bxdf "PxrDiffuse" "back" "color diffuseColor" [0.75 0.75 0.75]
+    Patch "bilinear" "P" [ -1 1 1  1 1 1  -1 -1 1  1 -1 1 ]
+  AttributeEnd
+
+  # Back sphere (chrome)
+  AttributeBegin
+    Translate 0.3 -0.7 0.3
+    Bxdf "PxrDisney" "chrome"
+         "color baseColor" [1 1 1] "float roughness" 0.03
+         "float metallic" 1.0
+    Sphere 0.3 -0.3 0.3 360
+  AttributeEnd
+
+  # Front sphere (glass)
+  AttributeBegin
+    Translate -0.3 -0.7 -0.1
+    Bxdf "PxrSurface" "glass"
+         "float diffuseGain" 1.0
+         "float refractionGain" 1.0 "color refractionColor" [1 1 1]
+         "float glassRoughness" 0.01 "float glassIor" 1.9 "color extinction" [0 0 0]
+    Sphere 0.3 -0.3 0.3 360
+  AttributeEnd
+
+  # Propeller
+  AttributeBegin
+    Translate 0.4 0.15 -0.2
+    Rotate 90 1 0 0
+    MotionBegin [0.0 0.03125 0.0625 0.09375 0.125 0.15625 0.1875 0.21875 0.25 0.28125 0.3125 0.34375 0.375 0.40625 0.4375 0.46875 0.5 0.53125 0.5625 0.59375 0.625 0.65625 0.6875 0.71875 0.75 0.78125 0.8125 0.84375 0.875 0.90625 0.9375 0.96875 1.0]
+        Rotate 0.0 0 1 0
+        Rotate 11.25 0 1 0
+        Rotate 22.5 0 1 0
+        Rotate 33.75 0 1 0
+        Rotate 45.0 0 1 0
+        Rotate 56.25 0 1 0
+        Rotate 67.5 0 1 0
+        Rotate 78.75 0 1 0
+        Rotate 90.0 0 1 0
+        Rotate 101.25 0 1 0
+        Rotate 112.5 0 1 0
+        Rotate 123.75 0 1 0
+        Rotate 135.0 0 1 0
+        Rotate 146.25 0 1 0
+        Rotate 157.5 0 1 0
+        Rotate 168.75 0 1 0
+        Rotate 180.0 0 1 0
+        Rotate 191.25 0 1 0
+        Rotate 202.5 0 1 0
+        Rotate 213.75 0 1 0
+        Rotate 225.0 0 1 0
+        Rotate 236.25 0 1 0
+        Rotate 247.5 0 1 0
+        Rotate 258.75 0 1 0
+        Rotate 270.0 0 1 0
+        Rotate 281.25 0 1 0
+        Rotate 292.5 0 1 0
+        Rotate 303.75 0 1 0
+        Rotate 315.0 0 1 0
+        Rotate 326.25 0 1 0
+        Rotate 337.5 0 1 0
+        Rotate 348.75 0 1 0
+        Rotate 360.0 0 1 0
+    MotionEnd
+    Bxdf "PxrDiffuse" "propeller"
+         "color diffuseColor" [0.5 0.5 0.5]
+    Cylinder 0.05 -0.6 0.6 360
+    Rotate 45 0 1 0
+    Cylinder 0.05 -0.6 0.6 360
+    Rotate 45 0 1 0
+    Cylinder 0.05 -0.6 0.6 360
+    Rotate 45 0 1 0
+    Cylinder 0.05 -0.6 0.6 360
+  AttributeEnd
+
+WorldEnd

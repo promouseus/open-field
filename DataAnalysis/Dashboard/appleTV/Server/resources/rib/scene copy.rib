@@ -19,7 +19,6 @@ Format 1920 1080 1.0 # Full HD
 Projection "perspective" "fov" [ 90 ]
 
 WorldBegin
-
 #Rotate -34 0 1 0
 
 #TransformBegin
@@ -54,7 +53,7 @@ AttributeBegin
 	#Matte 1 #doe als of object er wel is maar laat niet zien (voor foto later invoegen bijvoorbeeld)
 	Color [ 0 1 0 ]
 	Opacity [ 0.8 0.8 0.8 ]
-	ShadingRate 100 #hoger is minder punten dus abrupter kleur verloop, default 1: kan niet goed zien of dit werkt
+	# ShadingRate 100 #hoger is minder punten dus abrupter kleur verloop, default 1: kan niet goed zien of dit werkt
 	Sphere 2 -2 2 360
 AttributeEnd
 
@@ -79,7 +78,6 @@ AttributeBegin
 
 Translate -2 -1 -1.5
 Rotate -70 1 0 0
-
 # Rim of body
 
 Patch "bicubic" "P" [1.4 0 2.25  1.4 0.784 2.25  0.784 1.4 2.25  0 1.4 2.25
