@@ -22,4 +22,5 @@ emcc main.c -o main.html -s EXPORTED_FUNCTIONS='["_int_sqrt"]' -s EXTRA_EXPORTED
 emrun --no_browser --port 8080 .
 
 # Interact from HTML
+https://emscripten.org/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html
 <input id="clickMe" type="button" value="clickme" onclick="int_sqrt = Module.cwrap('int_sqrt', 'number', ['number']); int_sqrt(12);" />
