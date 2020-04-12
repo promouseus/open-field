@@ -15,6 +15,11 @@ services:
       - type: bind
         source: ./
         target: /home/nifi/data
+      #FROM apache/nifi:latest # all options below are for build base image
+      #COPY our_process.nar /opt/nifi/nifi-1.11.0/lib/ # add your own nar
+      #COPY our_workflow.xml /opt/nifi/nifi-1.11.0/conf/templates # add your own template
+      #COPY --chown=nifi:nifi flow.xml.gz /opt/nifi/nifi-1.11.0/conf/ # Add preconfigured flow
+      #EXPOSE 8080
 
   mongo:
     image: mongo
