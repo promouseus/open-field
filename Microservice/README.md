@@ -1,3 +1,12 @@
+# Open-field microservices
+127.0.0.1:
+8080: Nifi
+8081: Mongo-Express
+8082: Mongo-Charts
+8083: LibreNMS
+8084: NetBox
+8085: Icinga2
+
 # LibreNMS API
 
 ## Force host add (set force to false for real hosts)
@@ -39,9 +48,11 @@ Add line with interface name and ifAlias to /etc/network/interface:
 ```
 echo "$(grep -i "^# enp0s3:" /etc/network/interfaces | sed "s/^# enp0s3: //i")"
 
-
 Newer files?
 wget https://raw.githubusercontent.com/librenms/librenms/f38b1938ad6b98b60af711e1dd9c72293adf3456/scripts/ifAlias -O /usr/bin/ifAlias
+
+## Monitor own docker
+localhost and snmp communitie: librenmsdocker
 
 # Icinga
 curl -k -u root:a089eb37bcf244df -H 'Accept: application/json' \

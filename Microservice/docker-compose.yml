@@ -39,7 +39,7 @@ services:
     # https://docs.mongodb.com/charts/onprem/installation/
     image: quay.io/mongodb/charts:19.12.1
     environment:
-    - CHARTS_MONGODB_URI=mongodb://microservice_mongo_1
+      - CHARTS_MONGODB_URI=mongodb://microservice_mongo_1
     # The presence of following 2 environment variables will enable HTTPS on Charts server.
       # All HTTP requests will be redirected to HTTPS as well.
       # To enable HTTPS, upload your certificate and key file to the web-certs volume,
@@ -50,11 +50,13 @@ services:
       # This environment variable controls the built-in support widget and
       # metrics collection in MongoDB Charts. To disable both, set the value
       # to "off". The default is "on".
-    - CHARTS_SUPPORT_WIDGET_AND_METRICS=off
+      - CHARTS_SUPPORT_WIDGET_AND_METRICS=off
       # Directory where you can upload SSL certificates (.pem format) which
       # should be considered trusted self-signed or root certificates when
       # Charts is accessing MongoDB servers with ?ssl=true
-    - SSL_CERT_DIR=/mongodb-charts/volumes/db-certs
+      - SSL_CERT_DIR=/mongodb-charts/volumes/db-certs
+    depends_on:
+      - mongo
     restart: always
     volumes:
       - mongo-charts-keys:/mongodb-charts/volumes/keys
@@ -90,11 +92,8 @@ services:
     volumes:
       - "librenms-db:/var/lib/mysql"
     environment:
-      - "TZ=${TZ}"
       - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
-      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
-      - "MYSQL_USER=${MYSQL_USER}"
-      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+    env_file: env/librenms.env
     restart: always
 
   librenms:
@@ -108,17 +107,7 @@ services:
       - db
     volumes:
       - "librenms-data:/data"
-    environment:
-      - "TZ=${TZ}"
-      - "PUID=${PUID}"
-      - "PGID=${PGID}"
-      - "DB_HOST=db"
-      - "DB_NAME=${MYSQL_DATABASE}"
-      - "DB_USER=${MYSQL_USER}"
-      - "DB_PASSWORD=${MYSQL_PASSWORD}"
-      - "DB_TIMEOUT=60"
-    env_file:
-      - "./librenms.env"
+    env_file: env/librenms.env
     restart: always
 
   cron:
@@ -131,65 +120,56 @@ services:
     volumes:
       - "librenms-data:/data"
     environment:
-      - "TZ=${TZ}"
-      - "PUID=${PUID}"
-      - "PGID=${PGID}"
-      - "DB_HOST=db"
-      - "DB_NAME=${MYSQL_DATABASE}"
-      - "DB_USER=${MYSQL_USER}"
-      - "DB_PASSWORD=${MYSQL_PASSWORD}"
-      - "DB_TIMEOUT=60"
       - "SIDECAR_CRON=1"
-    env_file:
-      - "./librenms.env"
+    env_file: env/librenms.env
     restart: always
 
 # Netbox: https://github.com/netbox-community/netbox-docker
   netbox: &netbox
     image: netboxcommunity/netbox:latest
     depends_on:
-    - postgres
-    - redis
-    - netbox-worker
+      - postgres
+      - redis
+      - netbox-worker
     env_file: env/netbox.env
     user: '101'
     volumes:
-    - netbox-nginx-config:/etc/netbox-nginx:z
-    - netbox-static-files:/opt/netbox/netbox/static:z
-    - netbox-media-files:/opt/netbox/netbox/media:z
+      - netbox-nginx-config:/etc/netbox-nginx:z
+      - netbox-static-files:/opt/netbox/netbox/static:z
+      - netbox-media-files:/opt/netbox/netbox/media:z
   netbox-worker:
     <<: *netbox
     depends_on:
-    - redis
+      - redis
     entrypoint:
-    - python3
-    - /opt/netbox/netbox/manage.py
+      - python3
+      - /opt/netbox/netbox/manage.py
     command:
-    - rqworker
+      - rqworker
   nginx:
     command: nginx -c /etc/netbox-nginx/nginx.conf
     image: nginx:1.17-alpine
     depends_on:
-    - netbox
+      - netbox
     ports:
-    - 127.0.0.1:8084:8080
+      - 127.0.0.1:8084:8080
     volumes:
-    - netbox-static-files:/opt/netbox/netbox/static:ro
-    - netbox-nginx-config:/etc/netbox-nginx/:ro
+      - netbox-static-files:/opt/netbox/netbox/static:ro
+      - netbox-nginx-config:/etc/netbox-nginx/:ro
   postgres:
     image: postgres:11-alpine
     env_file: env/postgres.env
     volumes:
-    - netbox-postgres-data:/var/lib/postgresql/data
+      - netbox-postgres-data:/var/lib/postgresql/data
   redis:
     image: redis:5-alpine
     command:
-    - sh
-    - -c # this is to evaluate the $REDIS_PASSWORD from the env
-    - redis-server --appendonly yes --requirepass $$REDIS_PASSWORD ## $$ because of docker-compose
+      - sh
+      - -c # this is to evaluate the $REDIS_PASSWORD from the env
+      - redis-server --appendonly yes --requirepass $$REDIS_PASSWORD ## $$ because of docker-compose
     env_file: env/redis.env
     volumes:
-    - netbox-redis-data:/data
+      - netbox-redis-data:/data
   
 # Icinga (all for now, but scalling back to icinga2 master only with API/events)
   db-icinga:
@@ -203,7 +183,7 @@ services:
     volumes:
       - icinga2-schema:/docker-entrypoint-initdb.d/
     depends_on:
-          - master
+      - master
   db-web:
     build: icinga2/db-web
     restart: always
@@ -216,10 +196,10 @@ services:
     build: icinga2/master
     restart: always
     ports:
-        - "5665:5665"
+      - "5665:5665"
     volumes:
-        - icinga2-schema:/usr/share/icinga2-ido-mysql/schema
-        - ./master/conf.d/:/etc/icinga2/conf.d/
+      - icinga2-schema:/usr/share/icinga2-ido-mysql/schema
+      - ./icinga2/master/conf.d/:/etc/icinga2/conf.d/
   web:
     build: icinga2/web
     restart: always
