@@ -15,7 +15,6 @@ services:
       # /usr/share/logstash/config
     ports:
       - 5000:5000 # Syslog
-      - 5044:5044 # Beats
 
   elasticsearch:
     image: elasticsearch:7.6.2

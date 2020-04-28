@@ -18,3 +18,4 @@ curl -k -u root:a089eb37bcf244df 'https://localhost:5665/v1/objects/hosts'
 curl -k -u root:a089eb37bcf244df -H 'Accept: application/json'  -X POST 'https://localhost:5665/v1/actions/process-check-result' -d '{ "type": "Service", "filter": "host.name==\"NodeNameA\" && service.name==\"remote-checkjePassive\"", "exit_status": 0, "plugin_output": "PING alive - Packet loss = 0%", "performance_data": [ "count=7000.000000ms", "Rebootcount=6", "MyPercentage=75%"], "check_source": "remote.check.host.dom.ext", "pretty": true }'
 
 
+TODO: move settings like API key, pass to env
