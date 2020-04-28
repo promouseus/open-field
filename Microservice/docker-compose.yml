@@ -12,9 +12,9 @@ services:
         target: /opt/nifi/nifi-current/conf
         volume:
           nocopy: false
-      - type: bind
-        source: ./
-        target: /home/nifi/data
+      #- type: bind
+      #  source: ./
+      #  target: /home/nifi/data
       #FROM apache/nifi:latest # all options below are for build base image
       #COPY our_process.nar /opt/nifi/nifi-1.11.0/lib/ # add your own nar
       #COPY our_workflow.xml /opt/nifi/nifi-1.11.0/conf/templates # add your own template
@@ -65,25 +65,7 @@ services:
     ports:
       - "127.0.0.1:8082:80"
 
-  grafana:
-    image: grafana/grafana
-    restart: always
-    environment:
-      - GF_SERVER_ROOT_URL=http://127.0.0.1"
-      - GF_SECURITY_ADMIN_PASSWORD=password
-      - GF_INSTALL_PLUGINS=grafana-simple-json-datasource
-    volumes:
-      - grafana-storage:/var/lib/grafana
-    ports:
-      - "127.0.0.1:3000:3000"
-
-  grafana-datasource:
-    build: grafana-datasource
-    restart: always
-    ports:
-      - "127.0.0.1:8083:3333"
-
-  manager:
+      manager:
     image: alpine
     restart: always
     entrypoint: top
