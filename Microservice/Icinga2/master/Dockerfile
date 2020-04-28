@@ -18,7 +18,7 @@ RUN /usr/sbin/icinga2 feature enable ido-mysql \
     && echo "object IdoMysqlConnection \"ido-mysql\" {" >> /etc/icinga2/features-available/ido-mysql.conf \
     && echo -e "\tuser = \"icinga\"" >> /etc/icinga2/features-available/ido-mysql.conf \
     && echo -e "\tpassword = \"icingapwd\"" >> /etc/icinga2/features-available/ido-mysql.conf \
-    && echo -e "\thost = \"db\"" >> /etc/icinga2/features-available/ido-mysql.conf \
+    && echo -e "\thost = \"db-icinga\"" >> /etc/icinga2/features-available/ido-mysql.conf \
     && echo -e "\tdatabase = \"icinga\"" >> /etc/icinga2/features-available/ido-mysql.conf \
     && echo "}" >> /etc/icinga2/features-available/ido-mysql.conf
 

@@ -28,6 +28,7 @@ services:
       - "127.0.0.1:27017:27017"
 
   # https://github.com/mongo-express/mongo-express-docker
+  # https://www.mongodb.com/download-center/compass
   mongo-express:
     image: mongo-express
     restart: always
@@ -189,6 +190,62 @@ services:
     env_file: env/redis.env
     volumes:
     - netbox-redis-data:/data
+  
+# Icinga (all for now, but scalling back to icinga2 master only with API/events)
+  db-icinga:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pwd
+      MYSQL_DATABASE: icinga
+      MYSQL_USER: icinga
+      MYSQL_PASSWORD: icingapwd
+    volumes:
+      - icinga2-schema:/docker-entrypoint-initdb.d/
+    depends_on:
+          - master
+  db-web:
+    build: icinga2/db-web
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pwd
+      MYSQL_DATABASE: icingaweb
+      MYSQL_USER: icingaweb
+      MYSQL_PASSWORD: icingawebpwd
+  master:
+    build: icinga2/master
+    restart: always
+    ports:
+        - "5665:5665"
+    volumes:
+        - icinga2-schema:/usr/share/icinga2-ido-mysql/schema
+        - ./master/conf.d/:/etc/icinga2/conf.d/
+  web:
+    build: icinga2/web
+    restart: always
+    volumes:
+      - icingaweb2-app:/usr/share/webapps/icingaweb2
+      - icingaweb2-etc:/etc/icingaweb2
+    ports:
+      - "8085:80"
+    depends_on:
+      - php
+      - db-web
+      - master
+  php:
+    build: icinga2/php
+    restart: always
+    volumes:
+      - icingaweb2-app:/usr/share/webapps/icingaweb2
+      - icingaweb2-etc:/etc/icingaweb2
+  perf:
+    image: graphiteapp/graphite-statsd:latest
+    restart: always
+    #ports:
+      #- "8889:80"
+    environment:
+      MEMCACHE_HOST: 127.0.0.1:11211
+      CACHE_DURATION: 60
 
 volumes:
   nifi-conf:
@@ -206,3 +263,7 @@ volumes:
   netbox-media-files:
   netbox-postgres-data:
   netbox-redis-data:
+
+  icingaweb2-app:
+  icingaweb2-etc:
+  icinga2-schema:
