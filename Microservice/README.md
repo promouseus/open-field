@@ -6,6 +6,7 @@
 8083: LibreNMS
 8084: NetBox
 8085: Icinga2
+8096: NiFi Syslog
 
 # LibreNMS API
 
@@ -91,3 +92,10 @@ TODO: move settings like API key, pass to env
     location: 'AMS-01'
   }
 }
+
+# Nifi
+Syslog UDP rsyslog conf in RFC5424 (listen Syslog with no parse and then to 5424 pars block)
+*.* @192.168.0.22:8086;RSYSLOG_SyslogProtocol23Format
+
+# Mongo
+TODO: Graph not starting at first boot, needs 1 reboot? Add auto config of first user

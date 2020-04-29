@@ -6,6 +6,10 @@ services:
     restart: always
     ports:
       - "127.0.0.1:8080:8080"
+      - target: 8086
+        published: 8086
+        protocol: udp
+        mode: host
     volumes:
       - type: volume
         source: nifi-conf
