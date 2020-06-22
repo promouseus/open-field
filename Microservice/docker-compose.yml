@@ -26,7 +26,7 @@ services:
       #EXPOSE 8080
 
   mongo:
-    image: mongo
+    image: mongo:latest
     restart: always
     ports:
       - "127.0.0.1:27017:27017"
@@ -72,7 +72,7 @@ services:
       - "127.0.0.1:8082:80"
 
   manager:
-    image: alpine
+    image: alpine:latest
     restart: always
     entrypoint: top
     volumes:
@@ -84,7 +84,7 @@ services:
 
 # LibreNMS
   db:
-    image: mariadb:10.2
+    image: mariadb:latest
     container_name: librenms_db
     command:
       - "mysqld"
@@ -222,14 +222,6 @@ services:
     volumes:
       - icingaweb2-app:/usr/share/webapps/icingaweb2
       - icingaweb2-etc:/etc/icingaweb2
-  perf:
-    image: graphiteapp/graphite-statsd:latest
-    restart: always
-    #ports:
-      #- "8889:80"
-    environment:
-      MEMCACHE_HOST: 127.0.0.1:11211
-      CACHE_DURATION: 60
 
 volumes:
   nifi-conf:
