@@ -12,7 +12,7 @@ int main()
     exit(-1);
  
   ssh_options_set(my_ssh_session, SSH_OPTIONS_HOST, "localhost");
- 
+  
   rc = ssh_connect(my_ssh_session);
   if (rc != SSH_OK)
   {

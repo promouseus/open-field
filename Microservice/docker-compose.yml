@@ -68,6 +68,7 @@ services:
       - mongo-charts-db-certs:/mongodb-charts/volumes/db-certs
       - mongo-charts-web-certs:/mongodb-charts/volumes/web-certs
     # Create first user: charts-cli add-user --first-name "first" --last-name "last" --email "mail@mail.mail" --password "password" --role "UserAdmin"
+    # DataSource: mongodb://microservice_mongo_1
     ports:
       - "127.0.0.1:8082:80"
 

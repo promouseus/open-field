@@ -1,23 +1,22 @@
-[
-    {
-        "data_namespace": {
-            "date": new Date(1485262600000),
-            "data_source": {
-                "rack": "A23",
-                "server": "X22",
-                "vm": 6
-            },
-            "sample": {
-                "counterA": 459,
-                "counterB": 569,
-                "counterC": 679
-            },
-            "relation": {
-                "A_relates_to": "B"
-            },
-            "event": {
-                "errorX": "Oh no, it's dead ;-) again......"
-            }
-        } 
+{
+    "date": {
+        "$date": "2019-08-11T18:09:14.692Z"
+    },
+    "type": "",  
+    "source": {
+        "rack": "A23",
+        "server": "X22",
+        "vm": 6
+    },
+    "metrics": {
+        "counterA": 459,
+        "counterB": 569,
+        "counterC": 79
+    },
+    "relations": {
+        "A_relates_to": "B"
+    },
+    "events": {
+        "errorX": "Oh no, it's dead ;-) again...... For the second time bla die bla"
     }
-]
+}
