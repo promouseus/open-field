@@ -53,7 +53,7 @@ Newer files?
 wget https://raw.githubusercontent.com/librenms/librenms/f38b1938ad6b98b60af711e1dd9c72293adf3456/scripts/ifAlias -O /usr/bin/ifAlias
 
 ## Monitor own docker
-localhost and snmp communitie: librenmsdocker
+localhost and snmp communitie: librenmsdocker (snmp v1)
 
 # Icinga
 curl -k -u root:a089eb37bcf244df -H 'Accept: application/json' \

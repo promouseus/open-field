@@ -115,19 +115,32 @@ services:
     env_file: env/librenms.env
     restart: always
 
-  cron:
+  redis:
+    image: redis:5.0-alpine
+    container_name: librenms_redis
+    env_file:
+      - env/librenms.env
+    restart: always
+
+  dispatcher:
     image: librenms/librenms:latest
-    container_name: librenms_cron
-    domainname: example.com
-    hostname: librenms
+    container_name: librenms_dispatcher
+    hostname: librenms-dispatcher
     depends_on:
       - librenms
+      - redis
     volumes:
       - "librenms-data:/data"
+    env_file:
+      - env/librenms.env
     environment:
-      - "SIDECAR_CRON=1"
-    env_file: env/librenms.env
+      - "SIDECAR_DISPATCHER=1"
+      - "DISPATCHER_NODE_ID=dispatcher1"
+      - "REDIS_HOST=redis"
+      - "REDIS_PORT=6379"
+      - "REDIS_DB=0"
     restart: always
+
 
 # Netbox: https://github.com/netbox-community/netbox-docker
   netbox: &netbox
