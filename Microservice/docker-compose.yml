@@ -5,7 +5,7 @@ services:
     image: "apache/nifi:latest"
     restart: always
     ports:
-      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:8081:8080"
       - target: 8086
         published: 8086
         protocol: udp
@@ -25,52 +25,36 @@ services:
       #COPY --chown=nifi:nifi flow.xml.gz /opt/nifi/nifi-1.11.0/conf/ # Add preconfigured flow
       #EXPOSE 8080
 
-  mongo:
-    image: mongo:latest
+  pulsar: 
+    image: apachepulsar/pulsar:2.6.1
     restart: always
     ports:
-      - "127.0.0.1:27017:27017"
-
-  # https://github.com/mongo-express/mongo-express-docker
-  # https://www.mongodb.com/download-center/compass
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - "127.0.0.1:8081:8081"
-
-  mongo-charts:
-    # https://docs.mongodb.com/charts/onprem/installation/
-    image: quay.io/mongodb/charts:19.12.1
-    environment:
-      - CHARTS_MONGODB_URI=mongodb://microservice_mongo_1
-    # The presence of following 2 environment variables will enable HTTPS on Charts server.
-      # All HTTP requests will be redirected to HTTPS as well.
-      # To enable HTTPS, upload your certificate and key file to the web-certs volume,
-      # uncomment the following lines and replace with the names of your certificate and key file.
-      # CHARTS_HTTPS_CERTIFICATE_FILE: charts-https.crt
-      # CHARTS_HTTPS_CERTIFICATE_KEY_FILE: charts-https.key
-
-      # This environment variable controls the built-in support widget and
-      # metrics collection in MongoDB Charts. To disable both, set the value
-      # to "off". The default is "on".
-      - CHARTS_SUPPORT_WIDGET_AND_METRICS=off
-      # Directory where you can upload SSL certificates (.pem format) which
-      # should be considered trusted self-signed or root certificates when
-      # Charts is accessing MongoDB servers with ?ssl=true
-      - SSL_CERT_DIR=/mongodb-charts/volumes/db-certs
-    depends_on:
-      - mongo
-    restart: always
+      - "127.0.0.1:6650:6650"
+      - "127.0.0.1:8080:8080"
     volumes:
-      - mongo-charts-keys:/mongodb-charts/volumes/keys
-      - mongo-charts-logs:/mongodb-charts/volumes/logs
-      - mongo-charts-db-certs:/mongodb-charts/volumes/db-certs
-      - mongo-charts-web-certs:/mongodb-charts/volumes/web-certs
-    # Create first user: charts-cli add-user --first-name "first" --last-name "last" --email "mail@mail.mail" --password "password" --role "UserAdmin"
-    # DataSource: mongodb://microservice_mongo_1
+      - "pulsardata:/pulsar/data"
+      - "pulsarconf:/pulsar/conf"
+    entrypoint: ["bin/pulsar", "standalone"]
+  
+  influx:
+    image: influxdb:latest
+    restart: always
     ports:
-      - "127.0.0.1:8082:80"
+      - "127.0.0.1:8086:8086"
+    volumes:
+      - "influxdata:/var/lib/influxdb"
+    environment:
+      - "INFLUXDB_DB=db0"
+      - "INFLUXDB_ADMIN_USER=admin"
+      - "INFLUXDB_ADMIN_PASSWORD=supersecretpassword"
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - "grafana-storage:/var/lib/grafana"
 
   manager:
     image: alpine:latest
@@ -80,8 +64,8 @@ services:
       - type: volume
         source: nifi-conf
         target: /opt/nifi-conf
-        volume:
-          mode: 0440
+        #volume:
+         # mode: 0440
 
 # LibreNMS
   db:
@@ -239,10 +223,12 @@ services:
 
 volumes:
   nifi-conf:
-  mongo-charts-keys:
-  mongo-charts-logs:
-  mongo-charts-db-certs:
-  mongo-charts-web-certs:
+
+  pulsardata:
+  pulsarconf:
+
+  influxdata:
+
   grafana-storage:
 
   librenms-data:

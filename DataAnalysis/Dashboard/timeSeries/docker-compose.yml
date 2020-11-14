@@ -1,0 +1,53 @@
+version: '3.4'
+
+services:
+  redis:
+    container_name: redistimeseries
+    image: redislabs/redistimeseries:latest
+    ports:
+      - '6379:6379'
+    volumes:
+       - redis_tsdb:/data/
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    ports:
+      - '3000:3000'
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
+      - GF_ENABLE_GZIP=true
+      - GF_INSTALL_PLUGINS=redis-datasource
+    volumes:
+      - ./redis.yaml:/etc/grafana/provisioning/datasources/redis.yaml
+      - grafana_conf:/var/lib/grafana
+
+  nifi:
+    image: "apache/nifi:1.9.2"
+    restart: always
+    ports:
+      - "127.0.0.1:8081:8080"
+     # - target: 8086
+     #   published: 8086
+     #   protocol: udp
+     #   mode: host
+    volumes:
+      - type: volume
+        source: nifi-conf
+        target: /opt/nifi/nifi-current/conf
+        volume:
+          nocopy: false
+
+volumes:
+  redis_tsdb:
+  grafana_conf:
+  nifi-conf:
+
+  # TS.ADD temperature:3:11 * 24
+
+  # curl localhost:8081/nifi-api/counters (used UpdateCounter Processor)
+  # {"counters":{"aggregateSnapshot":{"generated":"12:26:56 UTC","counters":[{"id":"e90d7643-9960-32ad-b0f7-2eae0784cd12","context":"UpdateCounter (127894f5-0175-1000-c58c-65479a1b8b90)","name":"testCounter","valueCount":10,"value":"10"},{"id":"2077c4df-266a-38f1-94e1-494490052172","context":"All UpdateCounter's","name":"testCounter","valueCount":10,"value":"10"}]}}}%  
+
+  # curl localhost:8081/nifi-api/process-groups/root/connections

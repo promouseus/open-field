@@ -1,0 +1,47 @@
+{
+    "counters": {
+        "aggregateSnapshot": {
+            "generated": "12:26:56 UTC",
+            "counters": [
+                {
+                    "id": "e90d7643-9960-32ad-b0f7-2eae0784cd12",
+                    "context": "UpdateCounter (127894f5-0175-1000-c58c-65479a1b8b90)",
+                    "name": "testCounter",
+                    "valueCount": 10,
+                    "value": "10"
+                },
+                {
+                    "id": "2077c4df-266a-38f1-94e1-494490052172",
+                    "context": "All UpdateCounter's",
+                    "name": "testCounter",
+                    "valueCount": 10,
+                    "value": "10"
+                }
+            ]
+        }
+    }
+}
+
+{
+    "counters": {
+        "aggregateSnapshot": {
+            "generated": "14:38:14 UTC",
+            "counters": [
+                {
+                    "id": "e90d7643-9960-32ad-b0f7-2eae0784cd12",
+                    "context": "UpdateCounter (127894f5-0175-1000-c58c-65479a1b8b90)",
+                    "name": "testCounter",
+                    "valueCount": 1530,
+                    "value": "1,530"
+                },
+                {
+                    "id": "2077c4df-266a-38f1-94e1-494490052172",
+                    "context": "All UpdateCounter's",
+                    "name": "testCounter",
+                    "valueCount": 1530,
+                    "value": "1,530"
+                }
+            ]
+        }
+    }
+}

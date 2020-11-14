@@ -1,11 +1,12 @@
 # Open-field microservices
 127.0.0.1:
-8080: Nifi
-8081: Mongo-Express
-8082: Mongo-Charts
+8080: Pulsar
+8081: Nifi
+8082: 
 8083: LibreNMS
 8084: NetBox
 8085: Icinga2
+8086: Influx
 8096: NiFi Syslog
 
 # LibreNMS API

@@ -1,0 +1,96 @@
+{
+    "date": {
+        "$date": "2019-08-11T18:09:14.692Z"
+    },
+    "type": "",
+    "source": {
+        "rack": "A22",
+        "server": "X2",
+        "vm": 7
+    },
+    "timeseries": { # https://statisticsbyjim.com/basics/data-types/
+                    # https://statisticsbyjim.com/time-series/time-series-analysis-introduction/
+                    # regular time intervals, understanding how a metric changes over time and forecasting future values
+                    # Use subject-area knowledge to choose the appropriate time interval that allows you to answer your research questions.
+                    # Panel data contain observations of multiple characteristics measured over time for the same set of subjects, such as people, businesses, or countries (cpu cores).
+                    For panel data, you need a time value and an additional characteristic to identify a particular observation. For example, if you have panel data that tracks sales for a group of companies over time, you’ll need a time value and a company identifier to find an individual observation.
+                    cpu.core1, cpu.core2, etc.
+                    # include trends, cycles, and irregular movements.
+
+
+        "counterA": 1559,
+        "counterB": 769,
+        "counterC": 299,
+
+        "quantitative": { # objective measurement (cont) or a count (disc)
+            "continuous": {}, # mean, median, distribution, range, and standard deviation
+                            ## Graph: histogram
+                            ### two continuous variables, you can graph them using a scatterplot, Use correlation to assess the strength of this relationship or regression analysis to derive the equation for the line that provides the best fit for these data.
+                            #### When you have continuous variables that are divided into groups, you can use a boxplot to display the central tendency and spread of each group.
+            "discrete": {} # count of the presence of a characteristic, result, item, or activity. These measures cannot be meaningfully divided into smaller increments.
+            ## rate of occurrence or a summary of the count, such as the mean, sum, and standard deviation
+            # Barchart: Each bar represents a distinct value, and the height represents its proportion in the entire
+        },
+        
+        "qualitative": {
+            "categorical": {}, # values that you can put into a countable number of distinct groups based on a characteristic.
+                                # categories have no natural order.
+            "binary": {}, # only two values/categories
+            "ordinal": {} # at least three categories, and the categories have a natural order (example: bad, good, best)
+        } 
+
+    },
+    "relations": {
+        "A_relates_to": "B"
+    },
+    "events": {
+        "errorX": "Oh no"
+    }
+}
+
+
+{
+    "date": {
+        "$date": "2019-08-11T18:09:14.692Z"
+    },
+    "type": "",
+    "source": {
+        "rack": "A22",
+        "server": "X2",
+        "vm": 7
+    },
+    "timeseries": { 
+
+        "counterA": 1559,
+        "counterB": 769,
+        "counterC": 299,
+
+        "quantitative": {
+            "continuous": {},
+            "discrete": {}
+        },
+        
+        "qualitative": {
+            "categorical": {},
+            "binary": {}, 
+            "ordinal": {} 
+        } 
+
+    },
+    "relations": {
+        "A_relates_to": "B"
+    },
+    "events": {
+        "errorX": "Oh no"
+    }
+}
+
+
+#Aggregate Mongo Pipe?
+Cross-sectional data describes a set of people, items, companies, etc. at a single point in time. The goal is to determine the differences between the subjects at one time.
+Wikipedia: Time series and cross-sectional data can be thought of as special cases of panel data that are in one dimension only (one panel member or individual for the former, one time point for the latter).
+-- balanced panel (each panel member is observed every periode) and unbalanced:
+
+
+C2IT exporters:
+- https://prometheus.io/docs/instrumenting/exposition_formats/]
