@@ -6,3 +6,6 @@
 
 # Exclude RAW prman output from git
 **/*.tiff
+
+# Exclude Environment files with secrets
+**/.env

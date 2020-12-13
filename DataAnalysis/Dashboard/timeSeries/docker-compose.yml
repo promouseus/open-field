@@ -4,46 +4,88 @@ services:
   redis:
     container_name: redistimeseries
     image: redislabs/redistimeseries:latest
+    restart: always
     ports:
-      - '6379:6379'
+      - '127.0.0.1:6379:6379'
     volumes:
        - redis_tsdb:/data/
 
   grafana:
     container_name: grafana
     image: grafana/grafana:latest
+    restart: always
     ports:
-      - '3000:3000'
+      - "0.0.0.0:443:3000"
     environment:
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_BASIC_ENABLED=false
+    # https://grafana.com/docs/grafana/latest/administration/configuration/
+      - GF_DEFAULT_INSTANCE_NAME=promouseus
+      - GF_SERVER_PROTOCOL=h2
+      - GF_SECURITY_ADMIN_USER=${PM_ADMIN}
+      - GF_SECURITY_ADMIN_PASSWORD=${PM_ADMIN}
+      - GF_SECURITY_DISABLE_GRAVATAR=true
+      - GF_SECURITY_DATA_SOURCE_PROXY_WHITELIST=redis:6379
+      - GF_SECURITY_COOKIE_SECURE=true
+      - GF_SECURITY_COOKIE_SAMESITE=strict
+      - GF_SECURITY_STRICT_TRANSPORT_SECURITY=true
+      - GF_SECURITY_STRICT_TRANSPORT_SECURITY_MAX_AGE_SECONDS=63072000
+      - GF_SECURITY_STRICT_TRANSPORT_SECURITY_SUBDOMAINS=true
+      - GF_SECURITY_STRICT_TRANSPORT_SECURITY_PRELOAD=true
+       # https://hstspreload.org/
+      - GF_PATHS_TEMP_DATA_LIFETIME=12h
+      - GF_SERVER_CERT_FILE=/etc/ssl/private/server.crt
+      - GF_SERVER_CERT_KEY=/etc/ssl/private/server.key
+      - GF_SERVER_DOMAIN=${PM_FQDN}
+      - GF_SERVER_ENFORCE_DOMAIN=true
+      - GF_SERVER_ROOT_URL=https://${PM_FQDN}/
+      #- GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      #- GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=true
       - GF_ENABLE_GZIP=true
       - GF_INSTALL_PLUGINS=redis-datasource
     volumes:
-      - ./redis.yaml:/etc/grafana/provisioning/datasources/redis.yaml
+      - ${PM_REDIS}/redis.yaml:/etc/grafana/provisioning/datasources/redis.yaml
+      - ${PM_CERT}/privkey.pem:/etc/ssl/private/server.key
+      - ${PM_CERT}/fullchain.pem:/etc/ssl/private/server.crt
       - grafana_conf:/var/lib/grafana
 
-  nifi:
-    image: "apache/nifi:1.9.2"
-    restart: always
-    ports:
-      - "127.0.0.1:8081:8080"
-     # - target: 8086
-     #   published: 8086
-     #   protocol: udp
-     #   mode: host
-    volumes:
-      - type: volume
-        source: nifi-conf
-        target: /opt/nifi/nifi-current/conf
-        volume:
-          nocopy: false
+#  proxy:
+#    container_name: proxy
+#    image: httpd:alpine
+#    restart: always
+#    ports:
+#     - "0.0.0.0:443:443"
+#    volumes:
+#      - ${PM_REDIS}/httpd.conf:/usr/local/apache2/conf/httpd.conf
+#      - ${PM_REDIS}/letsencrypt:/etc/letsencrypt
+#      - ${PM_REDIS}/letsencrypt/live/${PM_FQDN}/privkey.pem:/usr/local/apache2/conf/server.key
+#      - ${PM_REDIS}/letsencrypt/live/${PM_FQDN}/cert.pem:/usr/local/apache2/conf/server.crt
+    # apk add --no-cache certbot
+    # Initial DNS check (TLS renew after that?): certbot certonly --manual --preferred-challenges dns --agree-tos -m ${PM_EMAIL} -d ${PM_FQDN}
+    # certbot renew --dry-run #Oke? Then run line below
+    # certbot renew
+    # chown -R 472:472 letsencrypt # So grafana can read it ;-)
+
+
+#  nifi:
+#    image: "apache/nifi:1.9.2"
+#    restart: always
+#    ports:
+#      - "127.0.0.1:8081:8080"
+#     # - target: 8086
+#     #   published: 8086
+#     #   protocol: udp
+#     #   mode: host
+#    volumes:
+#      - type: volume
+#        source: nifi-conf
+#        target: /opt/nifi/nifi-current/conf
+#        volume:
+#          nocopy: false
 
 volumes:
   redis_tsdb:
   grafana_conf:
-  nifi-conf:
+#  nifi-conf:
 
   # TS.ADD temperature:3:11 * 24
 
