@@ -1,0 +1,35 @@
+{
+    "Transparency Alpha": "nonpremultipled",
+    "X-TIKA:Parsed-By-Full-Set": [
+        "org.apache.tika.parser.DefaultParser",
+        "org.apache.tika.parser.image.ImageParser",
+        "org.apache.tika.parser.ocr.TesseractOCRParser"
+    ],
+    "tiff:ImageLength": "6310",
+    "Compression CompressionTypeName": "deflate",
+    "Data BitsPerSample": "8 8 8 8",
+    "Data PlanarConfiguration": "PixelInterleaved",
+    "IHDR": "width=3840, height=6310, bitDepth=8, colorType=RGBAlpha, compressionMethod=deflate, filterMethod=adaptive, interlaceMethod=none",
+    "Chroma ColorSpaceType": "RGB",
+    "Content-Length": "4174441",
+    "tiff:BitsPerSample": "8 8 8 8",
+    "Content-Type-Override": "image/png",
+    "Content-Type": "image/png",
+    "height": "6310",
+    "Dimension PixelAspectRatio": "1.0",
+    "Compression NumProgressiveScans": "1",
+    "Content-Type-Parser-Override": "image/ocr-png",
+    "X-TIKA:Parsed-By": [
+        "org.apache.tika.parser.DefaultParser",
+        "org.apache.tika.parser.image.ImageParser",
+        "org.apache.tika.parser.ocr.TesseractOCRParser"
+    ],
+    "Chroma BlackIsZero": "true",
+    "Compression Lossless": "true",
+    "width": "3840",
+    "Dimension ImageOrientation": "Normal",
+    "X-TIKA:content": "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta name=\"Transparency Alpha\" content=\"nonpremultipled\" />\n<meta name=\"tiff:ImageLength\" content=\"6310\" />\n<meta name=\"Compression CompressionTypeName\" content=\"deflate\" />\n<meta name=\"Dimension PixelAspectRatio\" content=\"1.0\" />\n<meta name=\"Data BitsPerSample\" content=\"8 8 8 8\" />\n<meta name=\"Data PlanarConfiguration\" content=\"PixelInterleaved\" />\n<meta name=\"IHDR\" content=\"width=3840, height=6310, bitDepth=8, colorType=RGBAlpha, compressionMethod=deflate, filterMethod=adaptive, interlaceMethod=none\" />\n<meta name=\"Compression NumProgressiveScans\" content=\"1\" />\n<meta name=\"Content-Type-Parser-Override\" content=\"image/ocr-png\" />\n<meta name=\"X-TIKA:Parsed-By\" content=\"org.apache.tika.parser.DefaultParser\" />\n<meta name=\"X-TIKA:Parsed-By\" content=\"org.apache.tika.parser.image.ImageParser\" />\n<meta name=\"X-TIKA:Parsed-By\" content=\"org.apache.tika.parser.ocr.TesseractOCRParser\" />\n<meta name=\"Chroma ColorSpaceType\" content=\"RGB\" />\n<meta name=\"Chroma BlackIsZero\" content=\"true\" />\n<meta name=\"Compression Lossless\" content=\"true\" />\n<meta name=\"width\" content=\"3840\" />\n<meta name=\"Dimension ImageOrientation\" content=\"Normal\" />\n<meta name=\"Content-Length\" content=\"4174441\" />\n<meta name=\"tiff:BitsPerSample\" content=\"8 8 8 8\" />\n<meta name=\"tiff:ImageWidth\" content=\"3840\" />\n<meta name=\"Content-Type-Override\" content=\"image/png\" />\n<meta name=\"Chroma NumChannels\" content=\"4\" />\n<meta name=\"Data SampleFormat\" content=\"UnsignedIntegral\" />\n<meta name=\"Content-Type\" content=\"image/png\" />\n<meta name=\"height\" content=\"6310\" />\n<title></title>\n</head>\n<body><div class=\"ocr\">Shop de hele collectie in onze 500m2 winkel, elke ma-za van 10 tot 5! Kijk hier voor info Xx\n\nGEEN VERZENDKOSTEN - ACHTERAF BETALEN - EENVOUDIG RETOURNEREN Zoekopdracht a\n\ndueeubus\n\nÛ Winkelwagen 0 Inloggen of Account aanmaken\n\nHeren Kinderen Home &amp; Gifts Halloween Mijn Verlanglijst Spotlight\n\nBanned Toucan 40's Blouse Mint\n\nMerk: Banned\nProduct Type: Tops\n€39,95\n\nMisschien moet je even gaan zitten voor deze blouse want. wauw!\nSmelt mee met die tropische toucan, compleet met bloemetjes in de uiteindes van de\n\nkraag... Ze is gemaakt van een zacht chiffon zonder stretch dat licht transparant is. Ze sluit\n\nmet gladde knoopjes aan de voorkant.\nEen stukje tropen, gewoon in jouw kast!\nMateriaal: 97% Polyester, 3% Elastane. Wasvoorschrift: wassen op 30 graden fijn\n\nwasprogramma, liggend drogen, niet bleken, niet chemisch reinigen, op lage temperatuur\n\nstrijken\n\nkledingmaten : M MAATTABEL\n\nom\nTOEVOEGEN AAN WINKELWAGEN DD\n\nKlanten-reviews\nNn MH\nKk H&amp;H 500 vande 5 KAAL o Schrijf een recensie\nGebaseerd op 1 beoordeling % kk úw 0\nverzameld door Judge.me Kk A tr dr o Een vraag stellen\nKu www 0\nMeest recente\nANAAL 05/08/2020\n\no A FEE\nEn «| Netherlands\n\nPrachtige blouse\n\nDeze blouses van Banned zijn geweldig en deze met de toekan is geen uitzondering. Het is elegant, speels en geschikt voor diverse gelegenheden.\n\n*o 9o\n\nVAAK SAMEN GEKOCHT:\n\nVoodoo Vixen Peyton... Unique Vintage Chita Plai... Rock N Romance Gladys... Onjenu Laurie Jewel 70's.. Rock N Romance Betsy. Banned Sea Scape Anch...\n\n€37,95 €74,95 €39,95 €124,95 €44,95 €39,95\n\nSHOP OP INFORMATIE KLANTENSERVICE BLIJF OP DE HOOGTE!\n\nNieu\n\ndeaubonnen\nubus D hland Vacature\nbus International\n\nMeldt je aan r de nieu\n\n3.V. All Right\n\npasssSosT\n\n</div>\n\n</body></html>",
+    "tiff:ImageWidth": "3840",
+    "Chroma NumChannels": "4",
+    "Data SampleFormat": "UnsignedIntegral"
+}

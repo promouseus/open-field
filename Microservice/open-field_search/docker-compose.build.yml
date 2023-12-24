@@ -1,0 +1,76 @@
+version: '3.4'
+services:
+
+  tika:
+    container_name: tika
+    build: tika
+    ports:
+      - "127.0.0.1:9998:9998"
+
+  selenium:
+    container_name: selenium
+    image: selenium/standalone-firefox
+    shm_size: 2g
+    ports:
+      - "127.0.0.1:4441:4444"
+      - "127.0.0.1:7901:7900" # pass: secret
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1080
+      - SCREEN_DEPTH=24
+
+  selenium2:
+    container_name: selenium2
+    image: selenium/standalone-firefox
+    shm_size: 2g
+    ports:
+      - "127.0.0.1:4442:4444"
+      - "127.0.0.1:7902:7900" # pass: secret
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1080
+      - SCREEN_DEPTH=24
+
+  selenium3:
+    container_name: selenium3
+    image: selenium/standalone-firefox
+    shm_size: 2g
+    ports:
+      - "127.0.0.1:4443:4444"
+      - "127.0.0.1:7903:7900" # pass: secret
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1080
+      - SCREEN_DEPTH=24
+
+  scraper:
+    container_name: scraper
+    build: scraper
+    volumes:
+      - ./scraper:/app
+    
+  solr:
+    container_name: solr
+    image: solr:latest
+    ports:
+      - "127.0.0.1:8983:8983"
+    volumes:
+      - solr_data:/var/solr
+    command:
+      - solr-create
+      - -c
+      - ilse
+    environment:
+      - SOLR_HEAP="8g"
+
+  nifi:
+    container_name: nifi
+    image: apache/nifi:latest
+    ports:
+      - 127.0.0.1:8443:8443
+    environment:
+      - SINGLE_USER_CREDENTIALS_USERNAME=user1
+      - SINGLE_USER_CREDENTIALS_PASSWORD=noSoSecretPass
+
+volumes:
+  solr_data:

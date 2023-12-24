@@ -1,0 +1,12 @@
+apiVersion: 1
+
+datasources:
+  - name: IoTDB
+    type: grafana-simple-json-datasource
+    access: proxy
+    orgId: 1
+    isDefault: true
+    version: 1
+    url: http://iotdb-grafana:8888
+    editable: true
+  

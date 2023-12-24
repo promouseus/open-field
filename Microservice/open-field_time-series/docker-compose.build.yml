@@ -1,0 +1,26 @@
+version: '3.4'
+services:
+
+  iotdb:
+    container_name: iotdb
+    build: iotdb
+    ports:
+      - "127.0.0.1:18080:18080"
+    volumes:
+      - iotdb_data:/iotdb/data:rw
+
+  iotdb-grafana:
+    container_name: iotdb-grafana
+    build: iotdb-grafana
+ 
+  grafana:
+    container_name: grafana
+    build: grafana
+    ports:
+      - "127.0.0.1:443:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana:rw
+
+volumes:
+  iotdb_data:
+  grafana_data:
