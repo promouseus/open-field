@@ -1,7 +1,0 @@
-version: '3.3'
-services:
-  libssh_builder:
-    build: libssh_builder
-    restart: always
-    volumes:
-      - ./:/opt/ssh

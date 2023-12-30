@@ -9,6 +9,7 @@
 
 # Exclude Environment files with secrets
 **/.env
+/env/
 
 # Exclude JAVA target folders
 */target/*
