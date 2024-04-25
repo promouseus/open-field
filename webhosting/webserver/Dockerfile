@@ -1,3 +1,4 @@
+LABEL org.opencontainers.image.authors="input@00010110.nl"
 FROM httpd:alpine
 VOLUME /usr/local/apache2/md
 

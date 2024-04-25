@@ -40,3 +40,8 @@ sudo apt-mark unhold mariadb-server
 # Holdbacks can be installed by apt install name them specific
 ```
 
+## PODMAN
+```bash
+podman pull httpd:alpine
+podman image build . -t open-field_webserver
+```

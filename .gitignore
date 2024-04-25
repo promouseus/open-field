@@ -13,3 +13,6 @@
 
 # Exclude JAVA target folders
 */target/*
+
+# Exclude Python byte-compiled
+**/__pycache__
